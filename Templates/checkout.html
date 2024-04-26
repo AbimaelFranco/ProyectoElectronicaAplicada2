@@ -1,0 +1,114 @@
+{% extends "template1.html" %}
+{% load static %}
+{% block content %} 
+
+    <div style="width: 100%; height: 10%; margin:auto; background: #051922;"></div>
+    <div class=" text-center" style="background-color: #051922">
+    <div class="breadcrumb-text" style="background-color: #051922">
+        <p>Green Genius</p>
+        <h1>checkout</h1>
+    </div>
+    </div>
+
+    <div style="width: 100%; height: 5%; margin:auto; background: #051922;"></div>
+
+    {% if pedido_valido is not True %}
+    <tr>
+        <td colspan="4">
+            <div class="alert alert-danger text-center">
+                Algunos productos exceden las cantidades disponibles en stock
+            </div>
+        </td>
+    </tr>
+    {% endif %} 
+
+	<!-- check out section -->
+	<div class="checkout-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="checkout-accordion-wrap">
+						<div class="accordion" id="accordionExample">
+						  <div class="card single-accordion">
+						    <div class="card-header" id="headingOne">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						          Detalles de Facturación
+						        </button>
+						      </h5>
+						    </div>
+
+						    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+						      <div class="card-body">
+						        <div class="billing-address-form">
+						        	<form action="index.html">
+						        		<p><input type="text" placeholder="Nombre"></p>
+						        		<p><input type="email" placeholder="Email"></p>
+						        		<p><input type="tel" placeholder="Teléfono"></p>
+						        		<p><input type="text" placeholder="Dirección"></p>
+						        		<p><textarea name="bill" id="bill" cols="30" rows="10" placeholder="Especificaciones de Entrega"></textarea></p>
+						        	</form>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div class="order-details-wrap">
+						<table class="order-details">
+
+{% comment %}  {% endcomment %}
+                                <h2>Tu pedido</h2>
+
+{% comment %}  {% endcomment %}
+
+
+							<thead>
+								<tr>
+									<th style="text-align: center">Producto</th>
+									<th style="text-align: center">Precio</th>
+								</tr>
+							</thead>
+							<tbody class="order-details-body">
+                                {% if request.session.carro.items %}
+                                {% for key, value in request.session.carro.items %}
+                                    <tr>
+                                        <td>{{value.nombre}} x {{value.cantidad}}</td>
+                                        <td sytle="text-align: center">Q{{value.subtotal |floatformat:2}}</td>
+                                    </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td>Sin productos en el carrito</td>
+                                    <td>$85.00</td>
+                                </tr>
+                                {% endif %}
+							</tbody>
+							<tbody class="checkout-details">
+								<tr>
+									<td bgcolor="#EEEEEE">Subtotal</td>
+									<td bgcolor="#EEEEEE">Q{{importe_total_carro |floatformat:2}}</td>
+								</tr>
+								<tr>
+									<td bgcolor="#EEEEEE">Envio</td>
+									<td bgcolor="#EEEEEE">Q 0.00</td>
+								</tr>
+								<tr>
+									<td bgcolor="#EEEEEE">Total</td>
+									<td bgcolor="#EEEEEE">Q{{importe_total_carro |floatformat:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<a href="../pedidos" class="boxed-btn" >Pagar</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end check out section -->
+
+{% endblock %}

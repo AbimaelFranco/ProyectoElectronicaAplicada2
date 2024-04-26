@@ -1,0 +1,60 @@
+{% extends "template1.html" %}
+{% load static %}
+{% load admin_urls %}
+{% block content %}
+
+<div style="width: 100%; height: 10%; margin:auto; background: #051922;"></div>
+<div class=" text-center" style="background-color: #051922">
+<div class="breadcrumb-text" style="background-color: #051922">
+    <p>Green Genius</p>
+    <h1>Dashboard</h1>
+</div>
+</div>
+
+<div style="width: 100%; height: 5%; margin:auto; background: #051922;"></div>
+
+<div>
+    {% if user.is_authenticated %}
+    <div style="margin-bottom: 5px; margin-top: 100px">
+        <div class="cart-buttons" style="text-align: center; margin-bottom: 5px">
+            <a href={% url 'Dashboard' %} class="boxed-btn">Acceder a Dashboard</a>
+        </div>
+    </div>
+    {% else %}
+<div style="margin-bottom: 5px; margin-top: 100px">
+    <div class="cart-buttons" style="text-align: center; margin-bottom: 5px">
+        <a href={% url 'Login' %} class="boxed-btn">Iniciar Sesión</a>
+    </div>
+</div>
+{% endif %}
+
+        	<!-- latest news -->
+	<div class="latest-news mt-100 mb-150">     
+		<div class="container">
+			<div class="row">
+                {% for beneficio in beneficio %}
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						{% comment %} <a href="single-news.html"><div class="latest-news-bg" sytle="background-image: url({{consejo.consejo_image.url}});"></div></a> {% endcomment %}
+                        {% comment %} <a href="single-product.html"><img src="{{consejo.consejo_image.url}}" alt="imagen {{consejo.consejo_image.url}}" title="{{consejo.titulo}}"  height="300px"></a> {% endcomment %}
+						<div class="news-text-box">
+							<h3 style="height: 50px; text-align: center">{{beneficio.titulo}}</h3>
+							<p class="blog-meta">
+								{% comment %} <span class="author"><i class="fas fa-user"></i> Green Genius</span> {% endcomment %}
+								{% comment %} <span class="date"><i class="fas fa-calendar"></i> 2024</span> {% endcomment %}
+							</p>
+							<p class="excerpt" style="height: 200px; text-align: center">{{beneficio.texto}}</p>
+							{% comment %} <a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a> {% endcomment %}
+						</div>
+					</div>
+				</div>
+                {% endfor %}
+			</div>
+
+		</div>
+	</div>
+	<!-- end latest news -->
+
+</div>
+
+{% endblock %}

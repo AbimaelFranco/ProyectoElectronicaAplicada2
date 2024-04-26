@@ -1,0 +1,183 @@
+{% load static %}
+{% load admin_urls %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+	<!-- title -->
+	<title>Green Genius</title>
+
+	<!-- favicon -->
+	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="{% static 'assets/css/all.min.css'%}">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css'%}">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="{% static 'assets/css/owl.carousel.css'%}">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css'%}">
+	<!-- animate css -->
+	<link rel="stylesheet" href="{% static 'assets/css/animate.css'%}">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="{% static 'assets/css/meanmenu.min.css'%}">
+	<!-- main style -->
+	<link rel="stylesheet" href="{% static 'assets/css/main.css'%}">
+	<!-- responsive -->
+	<link rel="stylesheet" href="{% static 'assets/css/responsive.css'%}">
+
+</head>
+<body>
+	
+	<!-- header -->
+	<div class="top-header-area" id="sticker">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-sm-12 text-center">
+					<div class="main-menu-wrap">
+						<!-- logo -->
+						<div class="site-logo">
+							<a href="index.html">
+								<img src="assets/img/logo.png" alt="">
+							</a>
+						</div>
+						<!-- logo -->
+
+						<!-- menu start -->
+						<nav class="main-menu">
+							<ul>
+								<li><a href={% url 'Home' %} >Página Principal</a></li>
+								<li><a>Dashboard</a>
+									<ul class="sub-menu">
+										{% if user.is_authenticated %}
+											<li><a href={% url 'Dashboard_info'%}>Información de Dashboard</a></li>
+											<li><a href={% url 'Dashboard' %}> Acceder a Dashboard</a></li>
+										{% else %}
+											<li><a href={% url 'Dashboard_info'%}>Información de Dashboard</a></li>
+										{% endif %}
+									</ul>
+								</li>
+								<li><a href={% url 'FAQs'%}>Consejos</a></li>
+								{% comment %} <li><a href={% url 'Catalogo'%}>Shop</a></li> {% endcomment %}
+								<li><a>Shop</a>
+									<ul class="sub-menu">
+										<li><a href={% url 'Catalogo' %}>Catálogo</a></li>
+										<li><a href={% url 'Carrito' %}>Carrito</a></li>
+									</ul>
+								</li>
+								<!--<li><a href="news.html">News</a></li>-->
+								<li><a href={% url 'Contacto'%}>Nosotros</a></li>
+								<!--<li><a href="shop.html">Catálogo</a></li>-->
+                                {% if user.is_authenticated %}
+                                    <li><a>{{user.username}}</a>
+                                        <ul class="sub-menu">
+                                            <li><a href={% url 'Perfil'%}>Perfil</a></li>
+                                            <li><a href={% url 'Dashboard' %}>Acceder a Dashboard</a></li>
+                                            <li><a href={% url 'Cerrar_sesion'%}>Cerrar Sesión</a></li>
+                                        </ul>
+                                    </li>
+                                {% else %}
+                                    <li><a>Login</a>
+                                        <ul class="sub-menu">
+                                            <li><a href={% url 'Login' %}>Iniciar Sesión</a></li>
+                                            <li><a href={% url 'Registro' %}>Registrarse</a></li>
+                                        </ul>
+                                    </li>
+                                {% endif %}
+							</ul>
+						</nav>
+						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end header -->
+
+    {% block content %}
+
+    {% endblock %}
+
+    
+	<!-- footer -->
+	<div class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-6">
+					<div class="footer-box about-widget">
+						<h2 class="widget-title">Sobre Nosotros</h2>
+						<p>Somos Alexander, Carlos y Jeffry, un equipo de estudiantes de Ingeniería Electrónica de la Universidad de San Carlos de Guatemala. Nuestro emprendimiento nació como un proyecto en el curso de Electrónica Aplicada 2 y ahora estamos creando macetas inteligentes para llevar la tecnología al mundo de la jardinería. ¡Únete a nosotros en esta emocionante aventura verde!</p>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">Contacto</h2>
+						<ul>
+							<li>Edificio T1, Facultad de Ingeniería, Universidad de San Carlos de Guatemala, Ciudad de Guatemala</li>
+							<li>support@fruitkha.com</li>
+							<li>+502 1234 5678	</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- end footer -->
+	
+	<!-- copyright -->
+	<div class="copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+					<p>Copyrights &copy; 2024 - Todos los derechos reservados.<br></p>
+				</div>
+				<div class="col-lg-6 text-right col-md-12">
+					<div class="social-icons">
+						<ul>
+							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end copyright -->
+	
+	<!-- jquery -->
+	<script src="{% static 'assets/js/jquery-1.11.3.min.js'%}"></script>
+	<!-- bootstrap -->
+	<script src="{% static 'assets/bootstrap/js/bootstrap.min.js'%}"></script>
+	<!-- count down -->
+	<script src="{% static 'assets/js/jquery.countdown.js'%}"></script>
+	<!-- isotope -->
+	<script src="{% static 'assets/js/jquery.isotope-3.0.6.min.js'%}"></script>
+	<!-- waypoints -->
+	<script src="{% static 'assets/js/waypoints.js'%}"></script>
+	<!-- owl carousel -->
+	<script src="{% static 'assets/js/owl.carousel.min.js'%}"></script>
+	<!-- magnific popup -->
+	<script src="{% static 'assets/js/jquery.magnific-popup.min.js'%}"></script>
+	<!-- mean menu -->
+	<script src="{% static 'assets/js/jquery.meanmenu.min.js'%}"></script>
+	<!-- sticker js -->
+	<script src="{% static 'assets/js/sticker.js'%}"></script>
+	<!-- main js -->
+	<script src="{% static 'assets/js/main.js'%}"></script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+{% extends "template.html" %}
+{% load static %}
+{% block content%}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+      <div class="col-sm-6 col-xl-3">
+        <div
+          class="bg-light rounded d-flex align-items-center justify-content-between p-4"
+        >
+          <i class="fa fa-chart-line fa-3x text-primary"></i>
+          <div class="ms-3">
+            <p class="mb-2">Último Registro</p>
+            <h6 class="mb-0">{{ ultimo_registro.date|date:'d/m H:i' }}</h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div
+          class="bg-light rounded d-flex align-items-center justify-content-between p-4"
+        >
+          <i class="fa fa-chart-bar fa-3x text-primary"></i>
+          <div class="ms-3">
+            <p class="mb-2">Estado</p>
+            <h6 class="mb-0">{{ ultimo_registro.state }}</h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div
+          class="bg-light rounded d-flex align-items-center justify-content-between p-4"
+        >
+          <i class="fa fa-chart-area fa-3x text-primary"></i>
+          <div class="ms-3">
+            <p class="mb-2">Humedad</p>
+            <h6 class="mb-0">{{ ultimo_registro.humidity|floatformat:2 }} %</h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div
+          class="bg-light rounded d-flex align-items-center justify-content-between p-4"
+        >
+          <i class="fa fa-chart-pie fa-3x text-primary"></i>
+          <div class="ms-3">
+            <p class="mb-2">Planta</p>
+            <h6 class="mb-0">{{ nombre_planta }}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div>
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">Perfil de Planta</h6>
+            {% comment %} <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput"
+                    placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+            </div> {% endcomment %}
+            {% comment %} <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="floatingPassword"
+                    placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div> {% endcomment %}
+            <div class="form-floating mb-3">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                    {% comment %} <option selected>Perfil</option> {% endcomment %}
+                    {% for perfiles in perfiles%}
+                    <option value="1">{{perfiles.plant_name}}</option>
+                    {% endfor %}
+                </select>
+                <label for="floatingSelect">Selecciona el perfil a utilizar</label>
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Comentario"
+                    id="floatingTextarea" style="height: 150px;"></textarea>
+                <label for="floatingTextarea">Comentario</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

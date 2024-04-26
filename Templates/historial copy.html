@@ -1,0 +1,158 @@
+{% extends "template.html" %}
+{% load static %}
+{% block content%}
+
+<div style="width: 100%; height: 10%;"> </div>
+
+{% comment %} <div>
+  <div class="bg-light text-center rounded p-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h6 class="mb-0">Historial de Humedad</h6>
+      <a href={% url 'Historial' %}>Mostrar todo</a>
+    </div>
+    <canvas id="worldwide-sales"></canvas>
+  </div>
+</div> {% endcomment %}
+
+<div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+              {% comment %} <div class="btn-wrapper">
+                <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+              </div> {% endcomment %}
+            </div>
+          </div>
+          <div class="tab-content tab-content-basic" style="padding-bottom: 0%; padding-top: 0%;">
+            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+
+              <div class="row">
+                <div class="col-lg-8 d-flex flex-column">
+                  <div class="row flex-grow">
+                    <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                      <div class="card card-rounded">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-center">
+                            <div width="100%" style="text-align: center;">
+                              <div width="100%" style="text-align: center; justify-content: center;">
+                              <h1>Historial de datos</h1>
+                              <table class="table table-striped" width="100%">
+                             <thead>
+                               <tr>
+                                 <!--<th>No.</th>-->
+                                 <th>Fecha</th>
+                                 <th>Estado</th>
+                                 <th>Humedad</th>
+                                 <th>Luminosidad</th>
+                               </tr>
+                             </thead>
+                             <tbody>
+                               {% for row in page_data %}
+                                 <tr>
+                                   <!--<td>{{ row.0 }}</td>-->
+                                   <td>{{ row.1 }}</td>
+                                   <td>{{ row.2 }}</td>
+                                   <td>{{ row.3 }}</td>
+                                   <td>{{ row.4 }}</td>
+                                 </tr>
+                               {% endfor %}
+                             </tbody>
+                              </table>
+                              <div class="pagination justify-content-center">
+                             <span class="step-links">
+                                 {% if page_data.has_previous %}
+                                      <a href="?page=1" class="btn btn-warning">
+                                        <i class="fas fa-arrow-left">Inicio</i>
+                                      </a>
+
+                                      <a href="?page={{ page_data.previous_page_number }}" class="btn btn-warning">
+                                        <i class="fas fa-arrow-left">Anterior</i>
+                                      </a>
+                                     
+                                 {% endif %}
+                         
+                                 <span class="current-page">
+                                     Página {{ page_data.number }} de {{ page_data.paginator.num_pages }}.
+                                 </span>
+                         
+                                 {% if page_data.has_next %}
+                                  <a href="?page={{ page_data.next_page_number }}" class="btn btn-warning">
+                                    <i class="fas fa-arrow-right">Siguiente</i>
+                                  </a>
+
+                                  <a href="?page={{ page_data.paginator.num_pages }}" class="btn btn-warning">
+                                    <i class="fas fa-arrow-right">Fin</i>
+                                  </a>
+                                 
+                                 {% endif %}
+                             </span>
+                              </div>
+                              </div>
+                            </div>
+                           </div>
+                          <!--<div class="chartjs-wrapper mt-5">
+                            <canvas id="performaneLine"></canvas>
+                          </div>-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 d-flex flex-column">
+                    <div style="width: 100%; height: 7%;"> </div>
+                    <div class="row flex-grow">
+                    <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                      <div class="card bg-primary card-rounded">
+                        {% comment %} <img src="{{imagen}}" width="100%" height="100%"> {% endcomment %}
+                        <img src="{% static 'dashboard/plots/mi_grafico2.png'%}" width="100%" height="100%">
+                      </div>
+                    </div>
+                    <div style="width: 100%; height: 7%;"> </div>
+                    <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                      <div class="card card-rounded">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <div class="d-flex justify-content-between align-items-center mb-2 mb-sm-0">
+                                <div class="circle-progress-width">
+                                  <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
+                                </div>
+                                <div>
+                                  <p class="text-small mb-2">Humedad promedio</p>
+                                  <h4 class="mb-0 fw-bold">{{media_humedad|floatformat:2}}</h4>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <div class="circle-progress-width">
+                                  <div id="visitperday" class="progressbar-js-circle pr-2"></div>
+                                </div>
+                                <div>
+                                  <p class="text-small mb-2">Intensidad promedio</p>
+                                  <h4 class="mb-0 fw-bold">{{media_intensidad|floatformat:2}}</h4>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<script>
+  var intensityData = {{ intensity|safe }};
+  var humidityData = {{ humidity|safe }};
+  var dates = {{ dates|safe }};
+</script>
+
+{% endblock %}

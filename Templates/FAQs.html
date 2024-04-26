@@ -1,0 +1,45 @@
+{% extends "template1.html" %}
+{% load static %}
+{% block content %}
+
+<div style="width: 100%; height: 10%; margin:auto; background: #051922;"></div>
+<div class=" text-center" style="background-color: #051922">
+<div class="breadcrumb-text" style="background-color: #051922">
+    <p>Green Genius</p>
+    <h1>Consejos</h1>
+</div>
+</div>
+
+<div style="width: 100%; height: 5%; margin:auto; background: #051922;"></div>
+
+{% comment %} <div style="width: 50%; height: 15%; margin:auto;"    ></div> {% endcomment %}
+
+    	<!-- latest news -->
+	<div class="latest-news mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+                {% for consejo in consejo %}
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						{% comment %} <a href="single-news.html"><div class="latest-news-bg" sytle="background-image: url({{consejo.consejo_image.url}});"></div></a> {% endcomment %}
+                        <a href="single-product.html"><img src="{{consejo.consejo_image.url}}" alt="imagen {{consejo.consejo_image.url}}" title="{{consejo.titulo}}"  height="300px"></a>
+						<div class="news-text-box">
+							<h3 style="height: 50px">{{consejo.titulo}}</h3>
+							<p class="blog-meta">
+								{% comment %} <span class="author"><i class="fas fa-user"></i> Green Genius</span> {% endcomment %}
+								{% comment %} <span class="date"><i class="fas fa-calendar"></i> 2024</span> {% endcomment %}
+							</p>
+							<p class="excerpt" style="height: 100px">{{consejo.texto}}</p>
+							{% comment %} <a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a> {% endcomment %}
+						</div>
+					</div>
+				</div>
+                {% endfor %}
+			</div>
+
+		</div>
+	</div>
+	<!-- end latest news -->
+
+
+{% endblock %}

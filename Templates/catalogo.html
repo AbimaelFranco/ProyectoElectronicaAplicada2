@@ -1,0 +1,75 @@
+{% extends "template1.html" %}
+{% load static %}
+{% block content %} 
+
+
+    {% comment %} <img class="img-fluid" src="{{ objeto_especifico.imagen.url }}" alt="" /> {% endcomment %}
+
+    <div style="width: 100%; height: 10%; margin:auto; background: #051922;"></div>
+    <div style="width: 50%; height: 15%; margin:auto;"></div>
+
+    
+		<!-- Start Banner Area -->
+        <section class="banner-area organic-breadcrumb">
+            <div class="container">
+                <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                    <div class="col-first">
+                        <h1>Catálogo</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Banner Area -->
+
+    
+        <!-- PRODUCTOS -->
+        <!-- product section -->
+	<div class="product-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="section-title">	
+						<h3><span class="orange-text">Nuestros</span> Productos</h3>
+						<p>Macetas inteligentes que facilitan el cuidado de tus plantas.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+                {%for arts in arts %}
+                {% if arts.disponibilidad%}
+                    <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 text-center">
+                        <div class="single-product-item">
+                            <div class="product-image">
+                                <a href="single-product.html"><img src="{{arts.imagen.url}}" alt="imagen {{arts.imagen.url}}" title="{{arts.nombre}}" width="100px" height="300px"></a>
+                            </div>
+                            <h3>{{arts.nombre}}</h3>
+
+                            <p class="product-price"><span>Precio por unidad</span> Q{{arts.descuento |stringformat:".2f"}} </p>
+
+                            <div class="price">
+                                {% if arts.descuento != arts.precio %}
+                                <h6 class="l-through"><s>Q{{arts.precio |stringformat:".2f"}}</s></h6>
+                                {% else%}
+                                <h6 class="l-through"> Precio regular </h6>
+                                {% endif %}
+                            </div>
+                            {% if arts.cantidad > 0%}
+                                <p>En existencia: {{arts.cantidad}}</p>
+                            {% else %}
+                                <p>Sin existencias</p>
+                            {% endif %}
+
+                            <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Comprar </a>
+                        </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
+			</div>
+		</div>
+	</div>
+	<!-- end product section -->
+        <!-- PRODUCTOS -->
+    
+    <div style="width: 50%; height: 15%; margin:auto;"></div>
+{% endblock %}

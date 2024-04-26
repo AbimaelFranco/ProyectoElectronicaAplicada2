@@ -1,0 +1,169 @@
+{% extends "template1.html" %}
+{% load static %}
+{% block content %} 
+	
+	{% comment %} <!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+	 {% endcomment %}
+
+	 <div style="width: 100%; height: 10%; margin:auto; background: #051922;"></div>
+	 {% comment %} <div style="width: 50%; height: 5%; margin:auto;"></div> {% endcomment %}
+	
+	<!-- breadcrumb-section -->
+
+
+	<div class=" text-center" style="background-color: #051922">
+		<div class="breadcrumb-text" style="background-color: #051922">
+			<p>Green Genius</p>
+			<h1>Carrito</h1>
+		</div>
+	</div>
+
+	<div style="width: 100%; height: 5%; margin:auto; background: #051922;"></div>
+
+	<!-- end breadcrumb section -->
+
+	<!-- products -->
+    {% if request.user.is_authenticated %}
+
+    <!-- cart -->
+	<div class="cart-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-md-12">
+					<div class="cart-table-wrap">
+						<table class="cart-table">
+							<thead class="cart-table-head">
+								<tr class="table-head-row">
+									<th class="product-remove"></th>
+									<th class="product-image">Vista Previa</th>
+									<th class="product-name">Producto</th>
+									<th class="product-price">Precio unitario</th>
+									<th class="product-quantity">Cantidad</th>
+									<th class="product-total">SubTotal</th>
+								</tr>
+							</thead>
+							<tbody>
+                                {% if request.session.carro.items %}
+                                {% for key, value in request.session.carro.items %}
+								<tr class="table-body-row">
+									<td class="product-remove">
+                                        <button type="submit" class="reduced items-count" type="button" data-toggle="modal" data-target="#exampleModal"><i class="far fa-window-close"></i></button>
+                                    </td>
+									<td class="product-image"><img src="{{value.imagen}}" alt=""></td>
+									<td class="product-name">{{value.nombre}}</td>
+									<td class="product-price">Q{{value.precio |floatformat:2}}</td>
+									{% comment %} <td class="product-quantity"><input type="number" placeholder="0" value="{{value.cantidad}}"></td> {% endcomment %}
+                                    <td>
+                                        <input type="number" placeholder="0" value="{{value.cantidad}}" readonly style="appearance: textfield; -moz-appearance: textfield; -webkit-appearance: textfield; width: 50px;">
+                                        {% comment %} <form action="{%url 'carro:agregar' value.producto_id%}">
+                                            <button type="submit" class="increase items-count" type="button"><i class="fa fa-arrow-up"></i></button>
+                                        </form>
+                                        {% if value.cantidad > 1%}
+                                            <form action="{%url 'carro:restar' value.producto_id%}">
+                                                <button type="submit" class="reduced items-count" type="button"><i class="fa fa-arrow-down"></i></button>
+                                            </form>
+                                        {% else %}
+                                            <button type="submit" class="reduced items-count" type="button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-arrow-down"></i></button>
+                                        {%endif%} {% endcomment %}
+                                    </td>
+									<td class="product-total">Q{{value.subtotal |floatformat:2}}</td>
+								</tr>
+                                {% comment %} ALERTA DE ELIMINAR ARTICULO {% endcomment %}
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confimarción de eliminación</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                        ¿Ésta seguro de eliminar este producto de su carrito?
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+                                        <form action="{%url 'carro:restar' value.producto_id%}">
+                                            <button type="submit" type="button" class="btn btn-primary">Confirmar</button>
+                                        </form>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                {% comment %} ALERTA DE ELIMINAR ARTICULO {% endcomment %}
+                                {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="6">
+                                            <div class="alert alert-danger text-center">
+                                                Sin productos en el carrito
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div class="total-section">
+						<table class="total-table">
+							<thead class="total-table-head">
+								<tr class="table-total-row">
+									<th>Concepto</th>
+									<th>Precio</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="total-data">
+									<td><strong>Articulos: </strong></td>
+									<td>Q{{importe_total_carro |floatformat:2}}</td>
+								</tr>
+								<tr class="total-data">
+									<td><strong>Envio: </strong></td>
+									<td>Q 0.00</td>
+								</tr>
+								<tr class="total-data">
+									<td><strong>Total: </strong></td>
+									<td>Q{{importe_total_carro}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="cart-buttons">
+							<a href="{% url 'Catalogo' %}" class="boxed-btn">Catálogo</a>
+                            {% if request.session.carro.items %}
+							    <a href="{% url 'Checkout' %}" class="boxed-btn black">Pagar</a>
+                            {% endif %}
+						</div>
+					</div>
+                    {% if request.session.carro.items %}
+                        <div class="coupon-section">
+                            <h3>Código de Descuento</h3>
+                            <div class="coupon-form-wrap">
+                                <form action="#">
+                                    <p><input type="text" placeholder="Código"></p>
+                                    <p><input type="submit" value="Aplicar"></p>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end cart -->    
+    {% else %}
+        <br></br>
+        <div class="alert alert-danger text-center">Debe iniciar sesión</div>
+        <br></br>
+    {% endif %}
+	<!-- end products -->
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "template1.html" %}
+{% load static %}
+{% block content %} 
+	
+    <div style="width: 100%; height: 10%; margin:auto; background: #051922;"></div>
+
+    <div class=" text-center" style="background-color: #051922">
+    <div class="breadcrumb-text" style="background-color: #051922">
+        <p>Green Genius</p>
+        <h1>Shop</h1>
+    </div>
+    </div>
+
+    <div style="width: 100%; height: 5%; margin:auto; background: #051922;"></div>
+
+	<!-- single product -->
+	<div class="single-product mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5">
+					<div class="single-product-img">
+						<img src="{{product.imagen.url}}" alt="">
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="single-product-content">
+						<h3>{{product.nombre}}</h3>
+                        {% if product.descuento != product.precio %}
+                            <p class="single-product-pricing"><span>Precio unitario:</span> Q{{product.descuento|stringformat:".2f"}}</p>
+                            <p><span>Antes:</span> Q{{product.precio|stringformat:".2f"}}</p>
+                        {% else %}
+                            <p class="single-product-pricing"><span>Precio unitario</span> Q{{product.precio|stringformat:".2f"}}</p>
+                        {% endif %}
+						<p>{{product.descripcion}}.</p>
+						<div class="single-product-form">
+							<form action="index.html">
+								<input type="number" placeholder="0">
+							</form>
+							<a href="{%url 'carro:agregar' product.id%}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Añadir al carrito</a>
+							<p><strong>Disponibilidad: </strong> 
+                                {% if product.cantidad > 0%}
+									{{product.cantidad}} Unidades
+                                {% else %}
+                                    Sin existencias
+                                {% endif %}
+                            </p>
+						</div>
+						<h4>Share:</h4>
+						<ul class="product-share">
+							<li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href=""><i class="fab fa-twitter"></i></a></li>
+							<li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
+							<li><a href=""><i class="fab fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end single product -->
+
+{% endblock %}
